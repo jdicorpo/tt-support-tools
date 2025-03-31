@@ -785,7 +785,8 @@ class Project:
         
         pcf_file = f'{self.args.board}_top.pcf'
 
-        nextpnr_cmd = f"nextpnr-ice40 -l {build_dir}/02-nextpnr.log --pcf-allow-unconstrained --seed {seed} --freq {freq} --package sg48 --up5k --asc {build_dir}/tt_fpga.asc --pcf {SCRIPT_DIR}/fpga/{pcf_file} --json {build_dir}/tt_fpga.json"
+        # nextpnr_cmd = f"nextpnr-ice40 -l {build_dir}/02-nextpnr.log --pcf-allow-unconstrained --seed {seed} --freq {freq} --package sg48 --up5k --asc {build_dir}/tt_fpga.asc --pcf {SCRIPT_DIR}/fpga/{pcf_file} --json {build_dir}/tt_fpga.json"
+        nextpnr_cmd = f"nextpnr-ice40 -l {build_dir}/02-nextpnr.log --pcf-allow-unconstrained --seed {seed} --freq {freq} --pre-pack {SCRIPT_DIR}/fpga/efab_explain_add_clk.py --package sg48 --up5k --asc {build_dir}/tt_fpga.asc --pcf {SCRIPT_DIR}/fpga/{pcf_file} --json {build_dir}/tt_fpga.json"
         logging.debug(nextpnr_cmd)
         p = subprocess.run(nextpnr_cmd, shell=True)
         if p.returncode != 0:
